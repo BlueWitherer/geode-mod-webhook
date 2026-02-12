@@ -77,7 +77,7 @@ async function main() {
                             {
                                 type: 2,
                                 style: 5,
-                                url: id ? `https://geode-sdk.org/mods/${id}` : undefined,
+                                url: `https://geode-sdk.org/mods/${id}`,
                                 label: 'Download',
                                 emoji: { name: '⬇️' },
                                 disabled: false,
