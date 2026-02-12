@@ -29,14 +29,24 @@ async function main() {
 
     // mod data
     const name = mod.name || mod.id || 'Unknown Mod';
-    const version = mod.version || '0.0.0';
     const id = mod.id || '';
 
-    let accessory = null;
-    const repo = process.env.GITHUB_REPOSITORY;
-    const tag = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/tags/')) ? process.env.GITHUB_REF.replace('refs/tags/', '') : null;
+    let version = mod.version || '1.0.0';
+    if (version.startsWith("v")) version = version.slice(1);
 
-    const logoUrl = `https://raw.githubusercontent.com/${repo}/refs/tags/${tag}/logo.png`;
+    let accessory = null;
+    const repo = process.env.GITHUB_REPOSITORY || '';
+    const ref = process.env.GITHUB_REF || '';
+
+    let logoUrl = null;
+    if (ref.startsWith('refs/tags/')) {
+        const tag = ref.replace('refs/tags/', '');
+        logoUrl = `https://raw.githubusercontent.com/${repo}/refs/tags/${tag}/logo.png`;
+    } else if (ref.startsWith('refs/heads/')) {
+        const branch = ref.replace('refs/heads/', '');
+        logoUrl = `https://raw.githubusercontent.com/${repo}/${branch}/logo.png`;
+    }
+
     if (logoUrl) accessory = { type: 11, media: { url: logoUrl }, description: `${name} mod logo.` };
 
     const componentsPayload = {
@@ -44,14 +54,14 @@ async function main() {
         components: [
             {
                 type: 17,
-                accent_color: 4199472,
+                accent_color: 4176208,
                 spoiler: false,
                 components: [
                     {
                         type: 9,
                         components: [
                             { type: 10, content: `# ${name}` },
-                            { type: 10, content: `**Release v${version}**` },
+                            { type: 10, content: `**Release \`v${version}\`**` },
                             { type: 10, content: changelogText || '' },
                         ],
                         accessory,

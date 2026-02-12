@@ -2,7 +2,7 @@
     "name": "geode-mod-webhook",
     "version": "1.0.0",
     "private": true,
-    "description": "Send a Discord Webhook components v2 message for a Geode mod.",
+    "description": "Send a Discord webhook message with components v2 for a Geode mod release notification..",
     "main": "src/index.js",
     "keywords": [
         "discord",
