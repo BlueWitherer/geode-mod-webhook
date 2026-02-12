@@ -21,7 +21,7 @@ async function main() {
     const modJSONFull = path.isAbsolute(modJSONPath) ? modJSONPath : path.join(repoRoot, modJSONPath);
     const mod = readJSONSafe(modJSONFull);
     if (!mod) {
-        console.error('Failed to read or parse mod.json at', modJSONFull);
+        console.error('Failed to read mod.json at', modJSONFull);
         process.exit(1);
     };
 
