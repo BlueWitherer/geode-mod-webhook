@@ -1,8 +1,8 @@
 {
-    "name": "discord-webhook",
+    "name": "geode-mod-webhook",
     "version": "1.0.0",
     "private": true,
-    "description": "Simple way to send Discord webhook messages from GitHub Actions",
+    "description": "Send a Discord Webhook components v2 message for a Geode mod.",
     "main": "src/index.js",
     "keywords": [
         "discord",
@@ -10,9 +10,6 @@
         "github",
         "actions"
     ],
-    "author": "Prevter",
-    "license": "MIT",
-    "dependencies": {
-        "glob": "^11.0.0"
-    }
+    "author": "Cheeseworks",
+    "license": "MIT"
 }

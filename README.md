@@ -1,4 +1,4 @@
-# discord-webhook
-Simple way to send Discord webhook messages from GitHub Actions
+# geode-mod-webhook
+Send a Discord Webhook components v2 message for a Geode mod.
 
 > TODO: Add documentation
