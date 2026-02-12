@@ -32,7 +32,7 @@ async function main() {
     const id = mod.id || '';
 
     let version = mod.version || '1.0.0';
-    if (version.startsWith("v")) version = version.slice(1);
+    if (version.toLowerCase().startsWith("v")) version = version.slice(1);
 
     let accessory = null;
     const repo = process.env.GITHUB_REPOSITORY || '';
@@ -61,7 +61,7 @@ async function main() {
                         type: 9,
                         components: [
                             { type: 10, content: `# ${name}` },
-                            { type: 10, content: `**Release \`v${version}\`**` },
+                            { type: 10, content: `### Release \`v${version}\`` },
                             { type: 10, content: changelogText || '' },
                         ],
                         accessory,
