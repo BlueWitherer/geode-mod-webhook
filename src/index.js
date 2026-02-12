@@ -42,6 +42,7 @@ async function main() {
     const componentsPayload = {
         components: [
             {
+                flags: 32768,
                 type: 17,
                 accent_color: 4199472,
                 spoiler: false,
