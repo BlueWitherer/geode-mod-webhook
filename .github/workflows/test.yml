@@ -19,6 +19,7 @@ jobs:
                   webhook-url: ${{ secrets.RELEASE_WEBHOOK }}
                   changelog: |
                       - Fixed bugs
-                      - Probably have like a lot more bugs left to fix to be honest lol
+                      - Probably still have like a lot more bugs left to fix in this mod to be honest lol
                       - Tweaked this one weird setting
                       - Soggy mod incompatible
+                      - This changelog was just a test

@@ -38,18 +38,19 @@ async function main() {
     const repo = process.env.GITHUB_REPOSITORY || '';
     const ref = process.env.GITHUB_REF || '';
 
-    let logoUrl = null;
-    if (ref.startsWith('refs/tags/')) {
-        const tag = ref.replace('refs/tags/', '');
-        logoUrl = `https://raw.githubusercontent.com/${repo}/refs/tags/${tag}/logo.png`;
-    } else if (ref.startsWith('refs/heads/')) {
-        const branch = ref.replace('refs/heads/', '');
-        logoUrl = `https://raw.githubusercontent.com/${repo}/${branch}/logo.png`;
-    }
-
+    let logoUrl = ref ? `https://raw.githubusercontent.com/${repo}/${ref}/logo.png` : null;
     if (logoUrl) accessory = { type: 11, media: { url: logoUrl }, description: `${name} mod logo.` };
 
-    const componentsPayload = {
+    const textComponents = [
+        { type: 10, content: `# ${name}` },
+        { type: 10, content: `### Release \`v${version}\`` },
+    ];
+    if (changelogText) textComponents.push({ type: 10, content: changelogText });
+
+    const textSection = { type: 9, components: textComponents };
+    if (accessory) textSection.accessory = accessory;
+
+    const body = {
         flags: 32768,
         components: [
             {
@@ -57,15 +58,7 @@ async function main() {
                 accent_color: 4176208,
                 spoiler: false,
                 components: [
-                    {
-                        type: 9,
-                        components: [
-                            { type: 10, content: `# ${name}` },
-                            { type: 10, content: `### Release \`v${version}\`` },
-                            { type: 10, content: changelogText || '' },
-                        ],
-                        accessory,
-                    },
+                    textSection,
                     {
                         type: 14,
                         spacing: 1,
@@ -88,24 +81,6 @@ async function main() {
             },
         ]
     };
-
-    function clean(obj) {
-        if (Array.isArray(obj)) return obj.map(clean);
-        if (obj && typeof obj === 'object') {
-            const out = {};
-            for (const k of Object.keys(obj)) {
-                const v = obj[k];
-                if (v === undefined || v === null) continue;
-                out[k] = clean(v);
-            };
-
-            return out;
-        };
-
-        return obj;
-    };
-
-    const body = clean(componentsPayload);
 
     try {
         const res = await fetch(`${webhookURL}?with_components=true`, {
