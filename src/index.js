@@ -56,7 +56,11 @@ async function main() {
                         ],
                         accessory,
                     },
-                    { type: 14, spacing: 1, divider: true },
+                    {
+                        type: 14,
+                        spacing: 1,
+                        divider: true
+                    },
                     {
                         type: 1,
                         components: [
@@ -94,7 +98,7 @@ async function main() {
     const body = clean(componentsPayload);
 
     try {
-        const res = await fetch(webhookURL, {
+        const res = await fetch(`${webhookURL}?with_components=true`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
