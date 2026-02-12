@@ -40,9 +40,9 @@ async function main() {
     if (logoUrl) accessory = { type: 11, media: { url: logoUrl }, description: `${name} mod logo.` };
 
     const componentsPayload = {
+        flags: 32768,
         components: [
             {
-                flags: 32768,
                 type: 17,
                 accent_color: 4199472,
                 spoiler: false,
