@@ -28,27 +28,94 @@ async function main() {
     const changelogText = process.env.CHANGELOG_TEXT || '';
 
     // mod data
-    const name = mod.name || mod.id || 'Unknown Mod';
+    const name = mod.name || 'Unknown Mod';
+    const description = mod.description || '';
     const id = mod.id || '';
+    const source = mod.links?.source || '';
 
     let version = mod.version || '1.0.0';
     if (version.toLowerCase().startsWith("v")) version = version.slice(1);
 
-    let accessory = null;
+    let geode = mod.geode || '1.0.0';
+    if (geode.toLowerCase().startsWith("v")) geode = geode.slice(1);
+
     const repo = process.env.GITHUB_REPOSITORY || '';
     const ref = process.env.GITHUB_REF || '';
 
-    let logoUrl = ref ? `https://raw.githubusercontent.com/${repo}/${ref}/logo.png` : null;
-    if (logoUrl) accessory = { type: 11, media: { url: logoUrl }, description: `${name} mod logo.` };
+    const titleSection = {
+        type: 9,
+        components: [
+            { type: 10, content: `# ${name}` },
+            { type: 10, content: `### Release \`v${version}\`` },
+            { type: 10, content: `${description}` },
+        ],
+        accessory: {
+            type: 11,
+            media: {
+                url: `https://raw.githubusercontent.com/${repo}/${ref}/logo.png`
+            },
+            description: `${name} mod logo.`
+        }
+    };
 
-    const textComponents = [
-        { type: 10, content: `# ${name}` },
-        { type: 10, content: `### Release \`v${version}\`` },
+    // all the components for the message
+    const components = [
+        titleSection
     ];
-    if (changelogText) textComponents.push({ type: 10, content: changelogText });
 
-    const textSection = { type: 9, components: textComponents };
-    if (accessory) textSection.accessory = accessory;
+    if (changelogText) components.push(
+        {
+            type: 14,
+            spacing: 1,
+            divider: true,
+        },
+        {
+            type: 10,
+            content: changelogText,
+        },
+    );
+
+    const buttons = [
+        {
+            type: 2,
+            style: 5,
+            url: `https://geode-sdk.org/mods/${id}`,
+            label: 'Download',
+            emoji: {
+                id: "1471682221881692191",
+                name: "downloads",
+                animated: false
+            },
+            disabled: false,
+        },
+    ];
+
+    if (source) buttons.push(
+        {
+            type: 2,
+            style: 5,
+            url: source,
+            label: "Source",
+            emoji: {
+                id: "1471682603106042013",
+                name: "GitHub",
+                animated: false
+            },
+            disabled: false,
+        },
+    );
+
+    components.push(
+        {
+            type: 14,
+            spacing: 1,
+            divider: true,
+        },
+        {
+            type: 1,
+            components: buttons,
+        },
+    );
 
     const body = {
         flags: 32768,
@@ -57,29 +124,13 @@ async function main() {
                 type: 17,
                 accent_color: 4176208,
                 spoiler: false,
-                components: [
-                    textSection,
-                    {
-                        type: 14,
-                        spacing: 1,
-                        divider: true
-                    },
-                    {
-                        type: 1,
-                        components: [
-                            {
-                                type: 2,
-                                style: 5,
-                                url: `https://geode-sdk.org/mods/${id}`,
-                                label: 'Download',
-                                emoji: { name: '⬇️' },
-                                disabled: false,
-                            },
-                        ],
-                    },
-                ],
+                components: components,
             },
-        ]
+            {
+                type: 10,
+                content: `-# <t:${Date.now() / 1000}:F> • **Geode \`v${geode}\`**`
+            }
+        ],
     };
 
     try {
