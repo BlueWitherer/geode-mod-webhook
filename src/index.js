@@ -52,15 +52,15 @@ async function main() {
         accessory: {
             type: 11,
             media: {
-                url: `https://raw.githubusercontent.com/${repo}/${ref}/logo.png`
+                url: `https://raw.githubusercontent.com/${repo}/${ref}/logo.png`,
             },
-            description: `${name} mod logo.`
-        }
+            description: `${name} mod logo.`,
+        },
     };
 
     // all the components for the message
     const components = [
-        titleSection
+        titleSection,
     ];
 
     if (changelogText) components.push(
