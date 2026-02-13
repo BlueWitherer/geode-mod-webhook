@@ -47,7 +47,7 @@ async function main() {
         components: [
             { type: 10, content: `# ${name}` },
             { type: 10, content: `### Release \`v${version}\`` },
-            { type: 10, content: `${description}` },
+            { type: 10, content: `-# ${description}` },
         ],
         accessory: {
             type: 11,
@@ -84,7 +84,7 @@ async function main() {
             emoji: {
                 id: "1471682221881692191",
                 name: "downloads",
-                animated: false
+                animated: false,
             },
             disabled: false,
         },
@@ -99,7 +99,7 @@ async function main() {
             emoji: {
                 id: "1471682603106042013",
                 name: "GitHub",
-                animated: false
+                animated: false,
             },
             disabled: false,
         },
@@ -128,15 +128,17 @@ async function main() {
             },
             {
                 type: 10,
-                content: `-# <t:${Date.now() / 1000}:F> • **Geode \`v${geode}\`**`
-            }
+                content: `-# <t:${Math.floor(Date.now() / 1000)}:F> • **Geode \`v${geode}\`**`,
+            },
         ],
     };
 
     try {
         const res = await fetch(`${webhookURL}?with_components=true`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(body),
         });
 
