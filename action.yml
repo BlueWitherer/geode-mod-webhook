@@ -6,6 +6,11 @@ inputs:
     description: "The webhook URL to send the message to"
     required: true
 
+  content:
+    description: "Miscellaneous contents of the message outside of the embed component."
+    required: false
+    default: ""
+
   mod-json-path:
     description: "Relative path to the mod's `mod.json` file. Defaults to root mod.json."
     required: false
@@ -29,5 +34,6 @@ runs:
       run: node ${{ github.action_path }}/src/index.js
       env:
         WEBHOOK_URL: ${{ inputs.webhook-url }}
+        MESSAGE_CONTENT: ${{ inputs.content }}
         MOD_JSON_PATH: ${{ inputs.mod-json-path }}
         CHANGELOG_TEXT: ${{ inputs.changelog }}

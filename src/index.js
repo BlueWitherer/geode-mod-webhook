@@ -16,6 +16,8 @@ async function main() {
         process.exit(1);
     };
 
+    const messageContent = process.env.MESSAGE_CONTENT;
+
     const repoRoot = process.env.GITHUB_WORKSPACE || process.cwd();
     const modJSONPath = process.env.MOD_JSON_PATH || path.join(repoRoot, 'mod.json');
     const modJSONFull = path.isAbsolute(modJSONPath) ? modJSONPath : path.join(repoRoot, modJSONPath);
