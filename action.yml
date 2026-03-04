@@ -24,14 +24,14 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Use Node.js
-      uses: actions/setup-node@v4
+    - name: Use Bun
+      uses: oven-sh/setup-bun@v1
       with:
-        node-version: "25.x"
+        bun-version: "latest"
 
     - name: Send Discord Webhook
       shell: bash
-      run: node ${{ github.action_path }}/src/index.js
+      run: bun ${{ github.action_path }}/src/index.js
       env:
         WEBHOOK_URL: ${{ inputs.webhook-url }}
         MESSAGE_CONTENT: ${{ inputs.content }}
