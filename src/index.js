@@ -119,20 +119,31 @@ async function main() {
         },
     );
 
+    const bodyComponents = [];
+
+    if (messageContent) bodyComponents.push(
+        {
+            type: 10,
+            content: messageContent
+        },
+    );
+
+    bodyComponents.push(
+        {
+            type: 17,
+            accent_color: 4176208,
+            spoiler: false,
+            components: components,
+        },
+        {
+            type: 10,
+            content: `-# <t:${Math.floor(Date.now() / 1000)}:F> • **Geode \`v${geode}\`**`,
+        },
+    );
+
     const body = {
         flags: 32768,
-        components: [
-            {
-                type: 17,
-                accent_color: 4176208,
-                spoiler: false,
-                components: components,
-            },
-            {
-                type: 10,
-                content: `-# <t:${Math.floor(Date.now() / 1000)}:F> • **Geode \`v${geode}\`**`,
-            },
-        ],
+        components: bodyComponents,
     };
 
     try {

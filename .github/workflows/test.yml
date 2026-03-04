@@ -17,6 +17,7 @@ jobs:
               uses: ./
               with:
                   webhook-url: ${{ secrets.RELEASE_WEBHOOK }}
+                  content: "-# <@!358673524661157897>"
                   changelog: |
                       - Fixed some bugs
                       - Probably still have like a lot more bugs left to fix in this mod to be totally honest lol
